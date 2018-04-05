@@ -14,7 +14,7 @@ var queryWit = function (text, n = 1) {
         'Content-Type': 'application/json'
       },
     }
-  ).then(res => res.json()).then(json => console.log(JSON.stringify(json)));
+  ).then(res => res.json()).then(witResponseObj => {return witResponseObj});
 }
 
 module.exports = {

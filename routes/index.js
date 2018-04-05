@@ -1,28 +1,25 @@
 import witService from '../server/sevices/witService';
-import tts from '../server/sevices/textToSpeech';
 var express = require('express');
 var router = express.Router();
 import path from 'path';
+import {insertDataIntoQuestions} from '../server/sevices/firebase-services';
 
 
 
 //Get Response from Witai
-router.get('/getResponse',function(req,res){
+router.get('/wit/getResponse', function(req, res) {
+  // console.log("firebase",fireBaseServices.insertDataIntoQuestions);
 
-  if(req.query.sentence!=''){
-    console.log("Passing on the sentence to witservice" + JSON.stringify(req.query.sentence));
-    witService.queryWit(req.query.sentence);
-  }else{
+  // console.log("firebaseServices.insertDataIntoQuestions",fireBaseServices.insertDataIntoQuestions);
+  insertDataIntoQuestions();
+   if (req.query.sentence != '') {
+   // console.log("Passing on the sentence to witservice" + JSON.stringify(req.query.sentence));
+    // witService.queryWit(req.query.sentence);
+
+  } else {
     console.log('Nothing to process');
   }
-
   res.send(200);
 });
 
-router.get('/getTTS',function(req,res){
-    console.log("Text to speech..");
-    tts.googleTTS('Hello World', 'en', 1);
-
-  res.sendStatus(200);
-});
 module.exports = router;

@@ -1,26 +1,31 @@
-
 <html>
-  <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no,user-scalable=no,maximum-scale=1">
-    <title>Inception Engine</title>
-    <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
-    <script src="../bundle.js"></script>
 
-    <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v2.1.0/dist/aframe-physics-system.min.js"></script>
-  </head>
-  <body>
-    <a-scene>
-      <a-assets>
-        <img id="sky" src="./images/panaroma1.jpg">
-      </a-assets>
-      <a-sky src="#sky"></a-sky>
-    </a-scene>
-    <script src="./js/index.js"></script>
-    <script src = "https://code.jquery.com/jquery-2.2.4.min.js"></script>
-    <script src = "../js/google-voice-script.js"></script>
-    <script src = "../js/main.js"></script>
-    <script src="../js/text-to-speech.js"></script>
-  </body>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no,user-scalable=no,maximum-scale=1">
+  <title>Inception Engine</title>
+  <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+</head>
+
+<body>
+  <a-scene>
+    <a-assets>
+      <img id="sky" src="./images/room6.jpg">
+    </a-assets>
+    <a-assets>
+      <a-asset-item id="model" src="model.dae"></a-asset-item>
+    </a-assets>
+
+    <!-- Using the asset management system. -->
+    <a-collada-model src="#model" drag-rotate-component="" position="-70 -50 0" rotation="0 90.01166961505233 0" scale="25 35 1" collada-model="model.dae"></a-collada-model>
+    <a-sky src="#sky" position="-131.165 -51.754 -100.888" material="" geometry=""></a-sky>
+  </a-scene>
+  <script src="./js/index.js"></script>
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+  <script src="../js/google-voice-script.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/text-to-speech.js"></script>
+</body>
+
 </html>
