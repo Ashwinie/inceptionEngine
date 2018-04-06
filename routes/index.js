@@ -4,19 +4,21 @@ var router = express.Router();
 import path from 'path';
 import {insertDataIntoQuestions} from '../server/sevices/firebase-services';
 import {queryGoogleFit} from '../server/sevices/googleFit-services';
-
-console.log("Query google fit obj", queryGoogleFit)
+import {compareIntentFromAnswer} from '../controllers/intentController';
 
 //Get Response from Witai
 router.get('/wit/getResponse', function(req, res) {
-  console.log("google fit");
- queryGoogleFit();
-
+  // console.log("firebase",fireBaseServices.insertDataIntoQuestions);
+console.log("getResponse",)
   // console.log("firebaseServices.insertDataIntoQuestions",fireBaseServices.insertDataIntoQuestions);
- // insertDataIntoQuestions();
-   if (req.query.sentence != '') {
+  // insertDataIntoQuestions();
+queryGoogleFit();
+ 
+  if (req.query.sentence != '') {
    // console.log("Passing on the sentence to witservice" + JSON.stringify(req.query.sentence));
-    // witService.queryWit(req.query.sentence);
+    witService.queryWit(req.query.sentence).then((res)=>{
+      console.log("res",res);
+    });
 
   } else {
     console.log('Nothing to process');
