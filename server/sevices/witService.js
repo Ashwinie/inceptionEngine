@@ -4,7 +4,7 @@ import fetch from 'node-fetch';
 
 
 var queryWit = function (text, n = 1) {
-  console.log("Hey I am gonna query wit");
+  console.log("Chennai");
   console.log(config.NEW_ACCESS_TOKEN);
   return fetch(
     'https://api.wit.ai/message?v=20180402&q='+text,
@@ -14,9 +14,9 @@ var queryWit = function (text, n = 1) {
         'Content-Type': 'application/json'
       },
     }
-  ).then(res => res.json()).then(witResponseObj => {return witResponseObj});
+  ).then(res => res.json()).then(witResponseObj => {console.log("witResponseObj : ",JSON.stringify(witResponseObj)); return witResponseObj});
 }
 
 module.exports = {
   queryWit
-}
+};

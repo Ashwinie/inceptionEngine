@@ -24,9 +24,9 @@ app.get('/',function(req,res){
 });
 app.all('/wit/*',indexRouter);
 // catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//   next(createError(404));
-// });
+app.use(function(req, res, next) {
+  next(createError(404));
+});
 
 // error handler
 app.use(function(err, req, res, next) {
@@ -38,7 +38,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-app.listen('3005',function(){
+app.listen('3000',function(){
   console.log("Server running in 3000");
 })
 module.exports = app;
