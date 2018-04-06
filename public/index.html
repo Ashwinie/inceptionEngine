@@ -1,31 +1,111 @@
+<!DOCTYPE html>
 <html>
 
 <head>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no,user-scalable=no,maximum-scale=1">
-  <title>Inception Engine</title>
-  <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+  <meta charset="utf-8">
+  <title>Inception Engine - Home </title>
+  <meta name="description" content="360&deg; Image Gallery - A-Frame">
+  <script src="https://aframe.io/releases/0.4.0/aframe.min.js"></script>
+  <script src="https://npmcdn.com/aframe-animation-component@3.0.1"></script>
+  <script src="https://npmcdn.com/aframe-event-set-component@3.0.1"></script>
+  <script src="https://npmcdn.com/aframe-layout-component@3.0.1"></script>
+  <script src="https://npmcdn.com/aframe-template-component@3.1.1"></script>
+
 </head>
 
 <body>
   <a-scene>
     <a-assets>
-      <img id="sky" src="./images/room6.jpg">
-    </a-assets>
-    <a-assets>
-      <a-asset-item id="model" src="model.dae"></a-asset-item>
+      <img id="city" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/city.jpg">
+      <img id="feedback" crossorigin="anonymous" src="view-feedback.png">
+      <img id="interview" crossorigin="anonymous" src="interview-icon.png">
+      <!--img id="sechelt-thumb" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/thumb-sechelt.jpg"-->
+      <audio id="click-sound" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/audio/click.ogg"></audio>
+      <img id="cubes" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/cubes.jpg">
+      <img id="sechelt" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/sechelt.jpg">
+
+      <!-- Image link template to be reused. -->
+      <script id="link" type="text/html">
+        <a-entity class="link" geometry="primitive: plane; height: 1; width: 1" material="shader: flat; src: ${thumb}" event-set__1="_event: mousedown; scale: 1 1 1" event-set__2="_event: mouseup; scale: 1.2 1.2 1" event-set__3="_event: mouseenter; scale: 1.2 1.2 1"
+          event-set__4="_event: mouseleave; scale: 1 1 1" set-image="on: click; target: #image-360; src: ${src}; link :${link}" sound="on: click; src: #click-sound"></a-entity>
+      </script>
     </a-assets>
 
-    <!-- Using the asset management system. -->
-    <a-collada-model src="#model" drag-rotate-component="" position="-70 -50 0" rotation="0 90.01166961505233 0" scale="25 35 1" collada-model="model.dae"></a-collada-model>
-    <a-sky src="#sky" position="-131.165 -51.754 -100.888" material="" geometry=""></a-sky>
+    <!-- 360-degree image. -->
+    <a-sky id="image-360" radius="10" src="#city"></a-sky>
+
+    <!-- Image links. -->
+    <a-entity id="links" layout="type: line; margin: 1.5" position="0 -1 -4">
+      <a-entity template="src: #link" data-src="#interview-src" data-thumb="#interview" data-link="/interview" ></a-entity>
+      <a-entity template="src: #link" data-src="#feedback-src" data-thumb="#feedback" data-link="/feedback"></a-entity>
+      <!--a-entity template="src: #link" data-src="#sechelt" data-thumb="#sechelt-thumb"></a-entity -->
+    </a-entity>
+
+    <!-- Camera + cursor. -->
+    <a-entity camera look-controls>
+      <a-cursor id="cursor" animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150" animation__fusing="property: fusing; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 1500" event-set__1="_event: mouseenter; color: springgreen"
+        event-set__2="_event: mouseleave; color: black" fuse="true" raycaster="objects: .link"></a-cursor>
+    </a-entity>
   </a-scene>
-  <script src="./js/index.js"></script>
-  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-  <script src="../js/google-voice-script.js"></script>
-  <script src="../js/main.js"></script>
-  <script src="../js/text-to-speech.js"></script>
+  <script>
+
+    AFRAME.registerComponent('set-image', {
+      schema: {
+        on: {type: 'string'},
+        target: {type: 'selector'},
+        src: {type: 'string'},
+        dur: {type: 'number', default: 300},
+        link:{type:'string'}
+      },
+
+      init: function () {
+        var data = this.data;
+        var el = this.el;
+
+        this.setupFadeAnimation();
+
+        el.addEventListener(data.on, function () {
+
+          console.log("data from listender call",data)
+          debugger;
+          // Fade out image.
+          // data.target.emit('set-image-fade');
+          // Wait for fade to complete.
+          window.location.href=window.location.origin+data.link;
+
+          setTimeout(function () {
+            // Set image.
+            // data.target.setAttribute('material', 'src', data.src);
+            window.location.href=window.location.origin+data.link;
+            // window.location.href=window.location.origin+'/interview';
+          }, data.dur);
+        });
+      },
+
+      /**
+       * Setup fade-in + fade-out.
+       */
+      setupFadeAnimation: function () {
+        var data = this.data;
+        var targetEl = this.data.target;
+
+        // Only set up once.
+        if (targetEl.dataset.setImageFadeSetup) { return; }
+        targetEl.dataset.setImageFadeSetup = true;
+
+        // Create animation.
+        targetEl.setAttribute('animation__fade', {
+          property: 'material.color',
+          startEvents: 'set-image-fade',
+          dir: 'alternate',
+          dur: data.dur,
+          from: '#FFF',
+          to: '#000'
+        });
+      }
+    });
+
+  </script>
 </body>
 
 </html>

@@ -21,12 +21,25 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
 
+app.get('/interview',function(req,res){
+  res.sendFile(path.join(__dirname + '/public/interview.html'));
+});
+
+app.get('/feedback',function(req,res){
+  res.sendFile(path.join(__dirname + '/public/feedback.html'));
+});
+app.get('/interview',function(req,res){
+  res.sendFile(path.join(__dirname + '/public/interview.html'));
+});
+app.get('/home',function(req,res){
+  res.sendFile(path.join(__dirname + '/public/index.html'));
+});
 app.get('/',function(req,res){
   res.sendFile(path.join(__dirname + '/public/index.html'));
 });
-
 app.get('/oauth2callback', (req, res) => {
   const code = req.query.code;
   oauth2Client.getToken(code, (err, tokens) => {
@@ -44,7 +57,7 @@ app.get('/oauth2callback', (req, res) => {
        // insertTokenIntoDb(tokens);
 
     res.send('Authentication successful! Please return to the console.');
-    
+
   });
 });
 
