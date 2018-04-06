@@ -29,6 +29,7 @@ var serviceAccount = require("../constants/serviceAccountKey.json");
       // answersRef = ref.child("Answers");
      };
    dbinit();
+  // insertDataIntoQuestions();
   export   function insertDataIntoQuestions (){
 
       // dbObj = dbinit();
@@ -36,41 +37,49 @@ var serviceAccount = require("../constants/serviceAccountKey.json");
       questionsRef = dbObj.child('Questions');
       questionsRef.set({
         question1 : {
+          key : '1',
           category : 'Greeting',
           intent : 'neutral',
           questions : 'Hey, Good morning! Please have a seat'
         },
         question2 : {
+         key : '2', 
          category : 'Introduction',
          Assertion: 'neutral',
          questions : 'Tell me about yourself'
        },
        question3 : {
+         key : '3',
          category : 'Attitude',
          Assertion : 'neutral',
          questions : 'What are your strengths?'
        },
        question4 : {
+         key : '4',
          category : 'Attitude',
          Assertion : 'neutral',
          questions : 'Ok. What are your weaknesses?'
        },
        question5 : {
+         key : '5',
          category : 'Location',
          Assertion : 'neutral',
          questions : 'Where are you from?'
        },
        question6 : {
+         key : '6',
          category : 'Location',
          Assertion : 'neutral',
          questions : 'So....Will you be willing to relocate?'
        },
        question7 : {
+         key : '7',
          category : 'Attitude',
          Assertion : 'neutral',
          questions : 'Why Sirius?'
        },
        question8 : {
+         key : '8',
          category : 'Availability',
          Assertion : 'neutral',
          questions : 'When will you be able to join Sirius?'

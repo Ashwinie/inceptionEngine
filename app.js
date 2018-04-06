@@ -75,7 +75,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen('3000',function(){
+app.listen('3005',function(){
   console.log("Server running in 3000");
  //opn(url, { wait: false });
 })

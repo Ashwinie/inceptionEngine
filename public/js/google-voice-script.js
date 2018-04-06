@@ -58,6 +58,9 @@ var googleVoice = function() {
                    // console.log("final");
                     final_transcript += event.results[i][0].transcript;
                    // app.createUserStory(final_transcript);
+                   
+                   passOnAnswers(final_transcript);
+                   recognition.stop();
                    console.log("final sentence" + final_transcript);
                     final_transcript = "";
                     interim_transcript = "";

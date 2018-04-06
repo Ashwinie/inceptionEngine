@@ -13,22 +13,22 @@ export const oauth2Client = new OAuth2(
 const scopes = [
   'https://www.googleapis.com/auth/fitness.body.read',
   'https://www.googleapis.com/auth/fitness.body.write',
-  'https://www.googleapis.com/auth/fitness.activity.write' 
+  'https://www.googleapis.com/auth/fitness.activity.write'
 
   ];
-  
+
   export const url = oauth2Client.generateAuthUrl({
     access_type: 'offline',
-  
+
     // If you only need one scope you can pass it as a string
     scope: scopes,
-  
+
     // Optional property that passes state parameters to redirect URI
     // state: 'foo'
   });
-  
- function getRefreshToken(){  
-   
+
+ function getRefreshToken(){
+
   return new Promise((resolve, reject)=>{
       oauth2Client.refreshAccessToken((err, tokens) => {
       // your access_token is now refreshed and stored in oauth2Client
@@ -39,10 +39,10 @@ const scopes = [
       }
         console.log('Refresh token value', tokens);
          resolve(tokens);
-      
+
     });
   })
-   
+
  }
 
 
@@ -51,14 +51,14 @@ const scopes = [
     console.log(retrieveGoogleAuthInfo);
     retrieveGoogleAuthInfo().then((token)=>{
       console.log('Tokening ' + JSON.stringify(token.tokens.access_token));
-   
+
       oauth2Client.setCredentials({
         access_token: token.tokens.access_token,
         refresh_token: token.tokens.refresh_token,
         expiry_date: token.tokens.expiry_date
       });
 
-      let refreshTokens = getRefreshToken().then((newTokens)=>{
+      return getRefreshToken().then((newTokens)=>{
         insertTokenIntoDb(newTokens);
         console.log("Refresh tokens "+ refreshTokens);
         return fetch(
@@ -70,19 +70,17 @@ const scopes = [
             },
           }
         ).then(res => res.json())
-        .then(ResponseObj => 
-         { 
+        .then(ResponseObj =>
+         {
           console.log('The response Obj', JSON.stringify(ResponseObj));
+          return ResponseObj;
          }).catch(err => console.log(err)
-        
+
         );
-      
+
       });
      // console.log("Auth " + token);
 
-      });   
-  
+      });
+
   };
-
-
-  

@@ -14,55 +14,34 @@
 <body>
   <a-scene>
     <!-- <a-plane color="#CCC" height="10" width="10"></a-plane> -->
-    <div class="wrapper"  >
-      <div class="item">
-        <div class="header color-yellow">Communication</div>
-        <ul class="list">
-          <li>You can reduce the number of pauses between your talk</li>
+    <div class="wrapper">
+      <div class="item com-item">
+        <div class="header ">Communication</div>
+        <ul class="com-list">
+          <!-- <li>You can reduce the number of pauses between your talk</li> -->
         </ul>
-        <div class="clear finalScore color-yellow">80% </div>
+        <div class="clear finalScore  com-score"> </div>
       </div>
 
-      <div class="item">
-        <div class="header color-green">Attitude</div>
-        <ul class="list">
-          <li>Good Job!!</li>
+      <div class="item att-item">
+        <div class="header ">Attitude</div>
+        <ul class="att-list">
+          <!-- <li>Good Job!!</li> -->
         </ul>
-        <div class="clear finalScore color-green">100% </div>
+        <div class="clear finalScore att-score"></div>
       </div>
-      <div class="item">
-        <div class="header  color-green">Nervousness</div>
-        <ul class="list">
-          <li>Good Job!!</li>
+      <div class="item ner-item">
+        <div class="header   ">Nervousness</div>
+        <ul class="ner-list">
+          <!-- <li>Good Job!!</li> -->
         </ul>
-        <div class=" clear finalScore  color-green">100% </div>
-      </div>
-    </div>
-    <div class="wrapper" style="display:none">
-      <div class="item">
-        <div class="header color-yellow">Communication</div>
-        <ul class="list">
-          <li>Reduce the number of non-lexical words while talking.</li>
-        </ul>
-        <div class="clear finalScore color-yellow"> 60% </div>
-      </div>
-      <div class="item">
-        <div class="header color-yellow">Attitude</div>
-        <ul class="list">
-          <li>Try to have more positive attitude and be more assertive</li>
-        </ul>
-        <div class="clear finalScore color-yellow"> 60% </div>
-      </div>
-      <div class="item">
-        <div class="header color-red">Nervousness</div>
-        <ul class="list">
-          <li>Take a chill pill !!</li>
-        </ul>
-        <div class=" clear finalScore color-red"> 40% </div>
+        <div class=" clear finalScore ner-score"> </div>
       </div>
     </div>
+
   </a-scene>
-  <script></script>
+  <script src="./js/jquery-3.2.1.min.js"></script>
+  <script src="./js/feedback.js"></script>
 </body>
 
 </html>
