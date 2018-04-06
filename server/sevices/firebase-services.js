@@ -9,6 +9,7 @@ var serviceAccount = require("../constants/serviceAccountKey.json");
       
      let questionsRef;
      let answersRef;
+     var dbObj;
      function dbinit(){
       console.log("Initializing firebase db");
       admin.initializeApp({
@@ -22,14 +23,15 @@ var serviceAccount = require("../constants/serviceAccountKey.json");
 
       console.log("Returning the object");
 
-      return ref;
+      dbObj= ref;
       //to save to database
       // questionsRef = ref.child("Questions");
       // answersRef = ref.child("Answers");
      };
-
+   dbinit();
   export   function insertDataIntoQuestions (){
-      let dbObj = dbinit();
+
+      // dbObj = dbinit();
       console.log('Firebase object created '+ dbObj);
       questionsRef = dbObj.child('Questions');
       questionsRef.set({
@@ -87,3 +89,37 @@ var serviceAccount = require("../constants/serviceAccountKey.json");
 // module.exports = {
 //   fireBaseServices
 // };
+
+
+export function insertTokenIntoDb(tokens){
+  // if(dbObj == ''){
+  //   dbObj = dbinit();
+  //  }
+  let googleTokens = dbObj.child('googleTokens');
+  googleTokens.set({
+        tokens:{
+          access_token:tokens.access_token,
+          refresh_token: tokens.refresh_token,
+          expiry_date: tokens.expiry_date
+        }
+  });
+
+
+
+}
+
+export function retrieveGoogleAuthInfo(){
+//  if(dbObj == ''){
+//   dbObj = dbinit();
+//  }
+return new Promise((resolve,reject)=>{
+  
+  let googleTokens = dbObj.child('googleTokens');
+  //to read data once
+  googleTokens.once("value", function(snapshot) {
+    console.log("Snapshot", JSON.stringify(snapshot.val()));
+    resolve(snapshot.val());
+  });
+});
+
+}
